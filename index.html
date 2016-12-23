@@ -22,6 +22,28 @@
     }
     function mineAudit() {
       document.getElementById('apiawnser').innerText = 'apiawnser: ' + "wtfffff";
+      var source = "" +
+        "contract FireEvent { " +
+        "    event AddMsg(address indexed sender, bytes32 msg); " +
+        "    function makeEvent() { " +
+        "    AddMsg(msg.sender, "Short message");" +
+        "     } " +
+        "}";  
+      var compiled = web3.eth.compile.solidity(source);
+      var code = compiled.Contract.code;
+      var abi = compiled.Contract.info.abiDefinition;
+      var address = "0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150";
+      var MyContract = web3.eth.contract(abi);
+      var contractInstance = MyContract.at(address);
+
+      var event = ContractInstance.AddMsg( {}, 
+        function(error, result) {
+          if (!error) {
+            var msg = "AddMsg: " + web3.toAscii(result.args.msg) + " from " + result.args.sender + " (block:" + result.blockNumber + ")";
+            document.getElementById('apiawnser').innerText = 'apiawnser: ' + msg;
+          }
+        } 
+      );
     }
 </script>
 </head>
