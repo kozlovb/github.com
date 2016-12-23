@@ -32,7 +32,7 @@
       var compiled = web3.eth.compile.solidity(source);
       var code = compiled.Contract.code;
       var abi = compiled.Contract.info.abiDefinition;
-      document.getElementById('apiawnser').innerText = 'apiawnser: ' + abi;
+      document.getElementById('apiawnser').innerText = 'apiawnser: ' + " 1 " + abi.toString();
       //var address = "0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150";
       //var MyContract = web3.eth.contract(abi);
       //var contractInstance = MyContract.at(address);
@@ -49,7 +49,7 @@
 </script>
 </head>
 <body>
-    <h1>mine audit event6</h1>
+    <h1>mine audit event7</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     <div></div>
     <div id="apiawnser"></div>
