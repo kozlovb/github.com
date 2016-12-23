@@ -1,5 +1,3 @@
-<p>Hello World!!!</p>
-
 <!doctype>
 <html>
 
@@ -22,44 +20,15 @@
             document.getElementById("diff").innerText = 'diff:    ' + (currentBalance - originalBalance);
         });
     }
-    function mineAudit() {
-      var source = "" +
-      "contract FireEvent { " +
-      "    event AddMsg(address indexed sender, bytes32 msg); " +
-      "    function makeEvent() { " +
-      "    AddMsg(msg.sender, "Short message");" +
-      "     } " +
-      "}";  
-      var compiled = web3.eth.compile.solidity(source);
-      var code = compiled.Contract.code;
-      var abi = compiled.Contract.info.abiDefinition;
-      var address = "0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150";
-      var MyContract = web3.eth.contract(abiArray);
-      var contractInstance = MyContract.at([address]);
-
-      var event = ContractInstance.AddMsg( {}, 
-        function(error, result) {
-          if (!error) {
-            var msg = "AddMsg: " + web3.toAscii(result.args.msg) + " from " + result.args.sender + " (block:" + result.blockNumber + ")";
-            document.getElementById('apiawnser').innerText = 'apiawnser: ' + msg;
-          }
-        } 
-      );
-    }
 </script>
 </head>
 <body>
-    <h1>mine audit event</h1>
-    <button type="button" onClick="mineAudit();">mine audit</button>
     <h1>coinbase balance</h1>
     <button type="button" onClick="watchBalance();">watch balance</button>
     <div></div>
-    <div id="apiawnser"></div>
-    <div id="average"></div> 
     <div id="coinbase"></div>
     <div id="original"></div>
     <div id="current"></div>
     <div id="diff"></div>
 </body>
 </html>
-
