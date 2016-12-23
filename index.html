@@ -26,7 +26,7 @@
         "contract FireEvent { " +
         "    event AddMsg(address indexed sender, bytes32 msg); " +
         "    function makeEvent() { " +
-        "    AddMsg(msg.sender, \"Short message\");" +
+        "    AddMsg(msg.sender, \"Short message\"); " +
         "     } " +
         "}";  
       var compiled = web3.eth.compile.solidity(source);
@@ -49,7 +49,7 @@
 </script>
 </head>
 <body>
-    <h1>mine audit event7</h1>
+    <h1>mine audit event8</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     <div></div>
     <div id="apiawnser"></div>
