@@ -45,14 +45,14 @@
       //  "    AddMsg(msg.sender, \"Short message\"); " +
       //  "     } " +
       //  "}"; 
-      var source ="pragma solidity ^0.4.2; contract FireEvent { event AddMsg(address indexed sender, bytes32 msg); function makeEvent() { AddMsg(msg.sender, \"Short message\");} }"; 
+      var source ="pragma solidity ^0.4.2; contract; FireEvent { event AddMsg(address indexed sender, bytes32 msg); function makeEvent() { AddMsg(msg.sender, \"Short message\");} }"; 
  
       var compiled = web3.eth.compile.solidity(source);
-      var code = compiled.FireEvent.code;
+     
       var abi = compiled.FireEvent.info.abiDefinition;
       var str = JSON.stringify(abi, null, 2);
-      document.getElementById('test').innerText = 'test: ' + str;
-      document.getElementById('apiawnser').innerText = 'apiawnser: ' + source;
+      //document.getElementById('test').innerText = 'test: ' + str;
+      document.getElementById('apiawnser').innerText = 'apiawnser: ' + str;
       //var address = "0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150";
       //var MyContract = web3.eth.contract(abi);
       //var contractInstance = MyContract.at(address);
@@ -72,7 +72,7 @@
 </script>
 </head>
 <body>
-    <h1>mine audit event18</h1>
+    <h1>mine audit event20</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     <div></div>
     <div id="test"></div>
