@@ -42,8 +42,9 @@
       var event = contractInstance.AddMsg( {}, {fromBlock: 0, toBlock: 'latest'}, 
                                            function(error, result) {
                                              if (!error) {                                                
-                                               document.getElementById('log_events').innerText = 'log_events: saw event';  //add later the content of result                                                                                }
-                                            } );
+                                               document.getElementById('log_events').innerText = 'log_events: saw event';  //add later the content of result
+                                             }
+                                           } );
       //for geth -      
       //event = contractInstance.AddMsg( {},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {if (!error) { console.log('log_events: saw event');}} );   
       document.getElementById('log').innerText = 'log - mine audit started';
@@ -56,7 +57,7 @@
 </script>
 </head>
 <body>
-    <h1>mine audit event22</h1>
+    <h1>mine audit event23</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     
     <div id="log"></div>
