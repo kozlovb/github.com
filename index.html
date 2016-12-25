@@ -28,15 +28,16 @@
       //address = 0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150 
       //block #0x034cf42de9b5a0768e0174cea5befd8a3cc1706d45019c1742113db085c1fd64
       //tx 0x32a8b75162fb210f88a437df1e8842dd3608392138dbf8c513eb915a546ef8d7
-      //var source = "pragma solidity ^0.4.2; contract SimpleEvent { event AddMsg(uint256); function makeEvent() {AddMsg(1);}}"
+      //var source = "pragma solidity ^0.4.2; contract FireEvent { event AddMsg(address indexed sender, bytes32 msg); function makeEvent() { AddMsg(msg.sender, \"Short message\");} }"
       //var compiled = web3.eth.compile.solidity(source);
-      //var abi = compiled.SimpleEvent.info.abiDefinition; 
+      //var abi = compiled.FireEvent.info.abiDefinition; 
       //var str = JSON.stringify(abi, null, 2);
-      //document.getElementById('test').innerText = 'test: ' + str;
+      //document.getElementById('log').innerText = 'log: ' + str;
 
       //II branch - current not working version
-      var address_c = "0xdace34b2b90675cc49be43cad6aa465f2e98b150";
-      var abi_string = "[{\"constant\": false,\"inputs\": [],\"name\": \"makeEvent\",\"outputs\": [],\"payable\": false,\"type\": \"function\"  },{\"anonymous\": false,\"inputs\": [{\"indexed\": false,\"name\": \"\",\"type\": \"uint256\"}],\"name\": \"AddMsg\",\"type\": \"event\"}]"
+      var address = "0xdace34b2b90675cc49be43cad6aa465f2e98b150";
+      var abi_string = "[{ \"constant\": false, \"inputs\": [], \"name\": \"makeEvent\", \"outputs\": [], \"payable\": false, \"type\": \"function\" }, { \"anonymous\": false, \"inputs\": [ { \"indexed\": true, \"name\": \"sender\", \"type\": \"address\" }, { \"indexed\": false, \"name\": \"msg\", \"type\": \"bytes32\" } ], \"name\": \"AddMsg\", \"type\": \"event\" }]";
+      
       var abi = JSON.parse(abi_string);
       var MyContract = web3.eth.contract(abi);
       var contractInstance = MyContract.at(address);
@@ -46,18 +47,22 @@
                                                document.getElementById('log_events').innerText = 'log_events: saw event';  //add later the content of result
                                              }
                                            } );
-      //for geth -      
+      //for geth console-      
       //event = contractInstance.AddMsg( {},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {if (!error) { console.log('log_events: saw event');}} );   
 
       //branch III (for console)
       //might work with filters also
-      //var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: '0xdace34b2b90675cc49be43cad6aa465f2e98b150', 'topics':[web3.sha3('AddMsg(uint256)')]});
+      //in forums it's unclear if sha3 returns with 0x or without. As for me it was wthout a added it.
+      //this web3.sha3 corresponds exactly to the one on the etherscan.io
+      //var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: 0xdace34b2b90675cc49be43cad6aa465f2e98b150, 'topics':[web3.sha3('0x'+'AddMsg(address,bytes32)')]});
+      //this one corresponds to address with canonical type
+      //var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: 0xdace34b2b90675cc49be43cad6aa465f2e98b150, 'topics':[web3.sha3('0x'+'AddMsg(hexstring,bytes32)')]});
       //filter.watch(function(error, result) {if(!error) console.log("saw event");})
     }
 </script>
 </head>
 <body>
-    <h1>mine audit event25</h1>
+    <h1>mine audit event26</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     
     <div id="log"></div>
