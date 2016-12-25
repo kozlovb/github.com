@@ -34,35 +34,33 @@
       //var str = JSON.stringify(abi, null, 2);
       //document.getElementById('log').innerText = 'log: ' + str;
 
-      //II branch - current not working version
+      //II branch working version
       var address = "0xdace34b2b90675cc49be43cad6aa465f2e98b150";
       var abi_string = "[{ \"constant\": false, \"inputs\": [], \"name\": \"makeEvent\", \"outputs\": [], \"payable\": false, \"type\": \"function\" }, { \"anonymous\": false, \"inputs\": [ { \"indexed\": true, \"name\": \"sender\", \"type\": \"address\" }, { \"indexed\": false, \"name\": \"msg\", \"type\": \"bytes32\" } ], \"name\": \"AddMsg\", \"type\": \"event\" }]";
       
       var abi = JSON.parse(abi_string);
       var MyContract = web3.eth.contract(abi);
       var contractInstance = MyContract.at(address);
-      var event = contractInstance.AddMsg( {}, {fromBlock: 0, toBlock: 'latest'}, 
+      var event = contractInstance.AddMsg( {}, {fromBlock: 0, toBlock: 221175}, 
                                            function(error, result) {
                                              if (!error) {                                                
-                                               document.getElementById('log_events').innerText = 'log_events: saw event';  //add later the content of result
+                                               document.getElementById('log_events').innerText = 'log_events: saw event' + JSON.stringify(result);  //parse later the content of result
                                              }
                                            } );
       //for geth console-      
       //event = contractInstance.AddMsg( {},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {if (!error) { console.log('log_events: saw event');}} );   
 
       //branch III (for console)
-      //might work with filters also
-      //in forums it's unclear if sha3 returns with 0x or without. As for me it was wthout a added it.
-      //this web3.sha3 corresponds exactly to the one on the etherscan.io
-      //var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: 0xdace34b2b90675cc49be43cad6aa465f2e98b150, 'topics':[web3.sha3('0x'+'AddMsg(address,bytes32)')]});
-      //this one corresponds to address with canonical type
-      //var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: 0xdace34b2b90675cc49be43cad6aa465f2e98b150, 'topics':[web3.sha3('0x'+'AddMsg(hexstring,bytes32)')]});
+      //if toBlock is put to "latest" doesnt work.
+      
+      //filter = web3.eth.filter({fromBlock: 0, toBlock: 221175, address: '0xdace34b2b90675cc49be43cad6aa465f2e98b150', topics:['0x'+web3.sha3('AddMsg(address,bytes32)')]});
       //filter.watch(function(error, result) {if(!error) console.log("saw event");})
+      //filter.get(function(error, result) { if(!error) console.log(JSON.stringify(result));})
     }
 </script>
 </head>
 <body>
-    <h1>mine audit event26</h1>
+    <h1>mine audit event27</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     
     <div id="log"></div>
