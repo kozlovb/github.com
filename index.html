@@ -28,17 +28,18 @@
       //address = 0xDaCE34b2B90675cc49be43cAD6aa465f2e98B150 
       //block #0x034cf42de9b5a0768e0174cea5befd8a3cc1706d45019c1742113db085c1fd64
       //tx 0x32a8b75162fb210f88a437df1e8842dd3608392138dbf8c513eb915a546ef8d7
-      //var source = "pragma solidity ^0.4.2; contract FireEvent { event AddMsg(address indexed sender, bytes32 msg); function makeEvent() { AddMsg(msg.sender, \"Short message\");} }"
-      //var compiled = web3.eth.compile.solidity(source);
-      //var abi = compiled.FireEvent.info.abiDefinition; 
-      //var str = JSON.stringify(abi, null, 2);
-      //document.getElementById('log').innerText = 'log: ' + str;
+      var source = "pragma solidity ^0.4.2; contract FireEvent { event AddMsg(address indexed sender, bytes32 msg); function makeEvent() { AddMsg(msg.sender, \"Short message\");} }"
+      var compiled = web3.eth.compile.solidity(source);
+      var abi = compiled.FireEvent.info.abiDefinition; 
+      var str = JSON.stringify(abi, null, 2);
+      document.getElementById('log').innerText = 'log: ' + str;
 
-      //II branch working version
+      //II branch working version - works with 221175 where is the actual transaction is in 221174. with 'latest' doesnt work, probably testnet latency problem
+      //Also the same code executed in console find 2 events. The second one is in block 209902. No explanation for that so far ...
       var address = "0xdace34b2b90675cc49be43cad6aa465f2e98b150";
-      var abi_string = "[{ \"constant\": false, \"inputs\": [], \"name\": \"makeEvent\", \"outputs\": [], \"payable\": false, \"type\": \"function\" }, { \"anonymous\": false, \"inputs\": [ { \"indexed\": true, \"name\": \"sender\", \"type\": \"address\" }, { \"indexed\": false, \"name\": \"msg\", \"type\": \"bytes32\" } ], \"name\": \"AddMsg\", \"type\": \"event\" }]";
+      //var abi_string = "[{ \"constant\": false, \"inputs\": [], \"name\": \"makeEvent\", \"outputs\": [], \"payable\": false, \"type\": \"function\" }, { \"anonymous\": false, \"inputs\": [ { \"indexed\": true, \"name\": \"sender\", \"type\": \"address\" }, { \"indexed\": false, \"name\": \"msg\", \"type\": \"bytes32\" } ], \"name\": \"AddMsg\", \"type\": \"event\" }]";
       
-      var abi = JSON.parse(abi_string);
+      //var abi = JSON.parse(abi_string);
       var MyContract = web3.eth.contract(abi);
       var contractInstance = MyContract.at(address);
       var event = contractInstance.AddMsg( {}, {fromBlock: 0, toBlock: 221175}, 
@@ -47,7 +48,7 @@
                                                document.getElementById('log_events').innerText = 'log_events: saw event' + JSON.stringify(result);  //parse later the content of result
                                              }
                                            } );
-      //for geth console-      
+      //for console-      
       //event = contractInstance.AddMsg( {},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {if (!error) { console.log('log_events: saw event');}} );   
 
       //branch III (for console)
@@ -55,6 +56,7 @@
       
       //filter = web3.eth.filter({fromBlock: 0, toBlock: 221175, address: '0xdace34b2b90675cc49be43cad6aa465f2e98b150', topics:['0x'+web3.sha3('AddMsg(address,bytes32)')]});
       //filter.watch(function(error, result) {if(!error) console.log("saw event");})
+      //here I used get. TODO difference between get and watch
       //filter.get(function(error, result) { if(!error) console.log(JSON.stringify(result));})
     }
 </script>
