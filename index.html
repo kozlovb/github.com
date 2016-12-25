@@ -21,6 +21,7 @@
         });
     }
     function mineAudit() {
+      document.getElementById('log').innerText = 'log - mine audit started';
       //I branch - for some reason abi is not showed. The compilator is there as - when a code with errors is submitted a compilation error is shown in the mist log.
       //also the same code works in geth console. Actually, the abi in the second branch is from there.
                   
@@ -47,7 +48,6 @@
                                            } );
       //for geth -      
       //event = contractInstance.AddMsg( {},{fromBlock: 0, toBlock: 'latest'}, function(error, result) {if (!error) { console.log('log_events: saw event');}} );   
-      document.getElementById('log').innerText = 'log - mine audit started';
 
       //branch III (for console)
       //might work with filters alos
@@ -57,7 +57,7 @@
 </script>
 </head>
 <body>
-    <h1>mine audit event23</h1>
+    <h1>mine audit event24</h1>
     <button type="button" onClick="mineAudit();">mine audit</button>
     
     <div id="log"></div>
